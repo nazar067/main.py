@@ -18,7 +18,7 @@ def get_current_time():
 
 async def get_logs(ctx, arg):
     server = ctx.guild.name
-    directory = f'C:\\Users\\gamer\\Documents\\BotServer\\logs\\{server}'
+    directory = f'C:\\Users\\nazar\\Documents\\BotServer\\logs\\{server}'
     check_dir = os.path.isdir(directory)
     if check_dir is True:
         path = f'{directory}\\{arg}.txt'
@@ -36,7 +36,7 @@ async def write_logs(ctx, args):
     channel = ctx.message.channel
     author = ctx.message.author.name
     id_user = ctx.message.author
-    directory = f'C:\\Users\\gamer\\Documents\\BotServer\\logs\\{server}'
+    directory = f'C:\\Users\\nazar\\Documents\\BotServer\\logs\\{server}'
     # path = f'E:\\CobainBot\\logs\\{get_current_time()}.txt'
     # check = os.path.isfile(path)
     check_dir = os.path.isdir(directory)

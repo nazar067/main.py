@@ -53,7 +53,7 @@ async def search_url(url, vc):
     with YoutubeDL(YDL_OPTIONS) as ydl:
         info = ydl.extract_info(url, download=False)
     URL = info['formats'][0]['url']
-    vc.play(discord.FFmpegPCMAudio(executable="C:\\Users\\gamer\\Documents\\BotServer\\ffmpeg.exe", source=URL,
+    vc.play(discord.FFmpegPCMAudio(executable="C:\\Users\\nazar\\Documents\\BotServer\\ffmpeg.exe", source=URL,
                                    **FFMPEG_OPTIONS))
     while vc.is_playing():
         await sleep(1)
@@ -68,7 +68,7 @@ async def search_word(ctx, word, vc):
         with YoutubeDL(YDL_OPTIONS) as ydl:
             info = ydl.extract_info(yt_url, download=False)
         url = info['formats'][0]['url']
-        vc.play(discord.FFmpegPCMAudio(executable="C:\\Users\\gamer\\Documents\\BotServer\\ffmpeg.exe", source=url,
+        vc.play(discord.FFmpegPCMAudio(executable="C:\\Users\\nazar\\Documents\\BotServer\\ffmpeg.exe", source=url,
                                        **FFMPEG_OPTIONS))
         while vc.is_playing():
             await sleep(1)
