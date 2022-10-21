@@ -173,5 +173,5 @@ async def logs(ctx, arg):
     await DevCommands.get_logs(ctx, arg)
 
 
-token = 'OTE0NDk4NTU2NjkyNDI2ODMz.GOI6Jb.yVimDjxGWey36s8PuO6XHD4Dggixz4DsbJnk60'
+token = ''
 client.run(token)
