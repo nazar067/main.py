@@ -1,29 +1,30 @@
 import os.path
 import sys
-import datetime
 import os
 import discord
 import requests
+from datetime import datetime
 
 
 def get_current_minute():
-    minutes = datetime.datetime.now()
-    return "<" + str(minutes.hour) + "h " + str(minutes.minute) + "m " + str(minutes.second) + "s" + ">"
+    cur_time = datetime.now()
+    return cur_time.strftime('<%Hh %Mm %Ss>')
 
 
 def get_current_time():
-    cur_time = datetime.datetime.now()
-    return str(cur_time.day) + "-" + str(cur_time.month) + "-" + str(cur_time.year)
+    cur_date = datetime.today()
+    return cur_date.strftime('%d-%m-%Y')
 
 
 async def get_logs(ctx, arg):
     server = ctx.guild.name
-    directory = f'C:\\Users\\nazar\\Documents\\BotServer\\logs\\{server}'
-    check_dir = os.path.isdir(directory)
-    if check_dir is True:
-        path = f'{directory}\\{arg}.txt'
-        check = os.path.isfile(path)
-        if check is True:
+    directory = f'logs/{server}'
+    dir_exists = os.path.exists(directory)
+
+    if dir_exists:
+        path = f'{directory}/{arg}.txt'
+        log_exists = os.path.exists(path)
+        if log_exists:
             await ctx.send(file=discord.File(path))
         else:
             await ctx.send('No logs for this date')
@@ -36,7 +37,7 @@ async def write_logs(ctx, args):
     channel = ctx.message.channel
     author = ctx.message.author.name
     id_user = ctx.message.author
-    directory = f'C:\\Users\\nazar\\Documents\\BotServer\\logs\\{server}'
+    directory = f'logs/{server}'
     # path = f'E:\\CobainBot\\logs\\{get_current_time()}.txt'
     # check = os.path.isfile(path)
     check_dir = os.path.isdir(directory)

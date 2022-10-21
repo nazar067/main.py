@@ -1,22 +1,29 @@
-import datetime
-
-import discord
-
+import os
+import sys
+import dotenv
 import Play
 import SupportCommands
 import DevCommands
-import TrollCommands
+from datetime import datetime
 from discord.ext import commands
+from discord import Intents
 from asyncio import sleep
+from DevCommands import get_current_time
+
+os.chdir(sys.path[0]) # Run bot in current directory
+dotenv.load_dotenv()  # Load .env file
+
+if not os.path.exists('logs'):
+    os.mkdir('logs')
 
 is_running = True
+intents = Intents.default()
+intents.message_content = True
+client = commands.Bot(command_prefix='!', intents=intents)
 
-client = commands.Bot(command_prefix='$')
 
-
-def get_current_time():
-    cur_time = datetime.datetime.now()
-    return str(cur_time.minute) + str(cur_time.hour)
+def get_switch_time():
+    return datetime.now().strftime('%m%h')
 
 
 @client.event
@@ -26,89 +33,75 @@ async def on_ready():
 
 @client.command()
 async def helps(ctx):
-    cur_time = datetime.datetime.now()
-    date = str(cur_time.day) + "-" + str(cur_time.month) + "-" + str(cur_time.year)
-    if date == "12-6-2022":
-        await ctx.send("Angron42 happy birthday!")
+    if get_current_time() == "12-06-2022":
+        await ctx.send("Angron42 happy birthday!") #🥰
+
     await DevCommands.write_logs(ctx, "helps")
     await SupportCommands.helps(ctx)
 
 
 @client.command()
 async def play(ctx, *args):
-    cur_time = datetime.datetime.now()
-    date = str(cur_time.day) + "-" + str(cur_time.month) + "-" + str(cur_time.year)
-    if date == "12-6-2022":
-        await ctx.send("Angron42 happy birthday!")
-    msg = "play "
-    for i in args:
-        msg = str(msg) + " " + i
+    if get_current_time() == "12-06-2022":
+        await ctx.send("Angron42 happy birthday!") #🥰
+
+    msg = "play " + ' '.join(args)
     await DevCommands.write_logs(ctx, msg)
     await Play.play(ctx, *args)
 
 
 @client.command()
 async def replay(ctx, *args):
-    cur_time = datetime.datetime.now()
-    date = str(cur_time.day) + "-" + str(cur_time.month) + "-" + str(cur_time.year)
-    if date == "12-6-2022":
-        await ctx.send("Angron42 happy birthday!")
-    msg = "play "
-    for i in args:
-        msg = str(msg) + " " + i
+    if get_current_time() == "12-06-2022":
+        return await ctx.send("Angron42 happy birthday!") #🥰
+
+    msg = "play " + ' '.join(args)
     await DevCommands.write_logs(ctx, msg)
     await Play.replay(ctx, *args)
 
 
 @client.command()
 async def leave(ctx):
-    cur_time = datetime.datetime.now()
-    date = str(cur_time.day) + "-" + str(cur_time.month) + "-" + str(cur_time.year)
-    if date == "12-6-2022":
-        await ctx.send("Angron42 happy birthday!")
+    if get_current_time() == "12-06-2022":
+        return await ctx.send("Angron42 happy birthday!") #🥰
+
     await DevCommands.write_logs(ctx, "leave")
     await SupportCommands.leave(ctx, client)
 
 
 @client.command()
 async def stop(ctx):
-    cur_time = datetime.datetime.now()
-    date = str(cur_time.day) + "-" + str(cur_time.month) + "-" + str(cur_time.year)
-    if date == "12-6-2022":
-        await ctx.send("Angron42 happy birthday!")
+    if get_current_time() == "12-06-2022":
+        await ctx.send("Angron42 happy birthday!") #🥰
+
     await DevCommands.write_logs(ctx, "stop")
     await SupportCommands.stop(ctx, client)
 
 
 @client.command()
 async def pause(ctx):
-    cur_time = datetime.datetime.now()
-    date = str(cur_time.day) + "-" + str(cur_time.month) + "-" + str(cur_time.year)
-    if date == "12-6-2022":
-        await ctx.send("Angron42 happy birthday!")
+    if get_current_time() == "12-06-2022":
+        await ctx.send("Angron42 happy birthday!") #🥰
+
     await DevCommands.write_logs(ctx, "pause")
     await SupportCommands.pause(ctx, client)
 
 
 @client.command()
 async def resume(ctx):
-    cur_time = datetime.datetime.now()
-    date = str(cur_time.day) + "-" + str(cur_time.month) + "-" + str(cur_time.year)
-    if date == "12-6-2022":
-        await ctx.send("Angron42 happy birthday!")
+    if get_current_time() == "12-06-2022":
+        await ctx.send("Angron42 happy birthday!") #🥰
+
     await DevCommands.write_logs(ctx, "resume")
     await SupportCommands.resume(ctx, client)
 
 
 @client.command()
-async def spam(ctx, *args, ):
-    cur_time = datetime.datetime.now()
-    date = str(cur_time.day) + "-" + str(cur_time.month) + "-" + str(cur_time.year)
-    if date == "12-6-2022":
-        await ctx.send("Angron42 happy birthday!")
-    msg = "spam "
-    for i in args:
-        msg = str(msg) + " " + i
+async def spam(ctx, *args):
+    if get_current_time() == "12-06-2022":
+        await ctx.send("Angron42 happy birthday!") #🥰
+
+    msg = "spam " + ' '.join(args)
     await DevCommands.write_logs(ctx, msg)
     global is_running
     string = None
@@ -139,24 +132,21 @@ async def spam(ctx, *args, ):
 
 @client.command(pass_context=True)
 async def switch(ctx, key):
-    cur_time = datetime.datetime.now()
-    date = str(cur_time.day) + "-" + str(cur_time.month) + "-" + str(cur_time.year)
-    if date == "12-6-2022":
-        await ctx.send("Angron42 happy birthday!")
+    if get_current_time() == "12-06-2022":
+        await ctx.send("Angron42 happy birthday!") #🥰
+
     msg = "switch " + key
     await DevCommands.write_logs(ctx, msg)
-    if key == get_current_time():
-        # globals()['is_running'] = not globals()['is_running']
+    if key == get_switch_time():
         global is_running
         is_running = not is_running
 
 
 @client.command(pass_cotext=True)
 async def get(ctx, arg):
-    cur_time = datetime.datetime.now()
-    date = str(cur_time.day) + "-" + str(cur_time.month) + "-" + str(cur_time.year)
-    if date == "12-6-2022":
-        await ctx.send("Angron42 happy birthday!")
+    if get_current_time() == "12-06-2022":
+        await ctx.send("Angron42 happy birthday!") #🥰
+
     msg = "get " + arg
     await DevCommands.write_logs(ctx, msg)
     await DevCommands.get(ctx, arg)
@@ -164,14 +154,13 @@ async def get(ctx, arg):
 
 @client.command()
 async def logs(ctx, arg):
-    cur_time = datetime.datetime.now()
-    date = str(cur_time.day) + "-" + str(cur_time.month) + "-" + str(cur_time.year)
-    if date == "12-6-2022":
-        await ctx.send("Angron42 happy birthday!")
+    if get_current_time() == "12-06-2022":
+        await ctx.send("Angron42 happy birthday!") #🥰
+
     msg = "logs " + arg
     await DevCommands.write_logs(ctx, msg)
     await DevCommands.get_logs(ctx, arg)
 
 
-token = ''
+token = os.getenv('TOKEN')
 client.run(token)
